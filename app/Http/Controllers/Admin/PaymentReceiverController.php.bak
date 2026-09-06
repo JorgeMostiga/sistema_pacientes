@@ -1,0 +1,75 @@
+<?php
+
+namespace App\Http\Controllers\Admin;
+
+use App\Http\Controllers\Controller;
+use App\Models\PaymentReceiver;
+use Illuminate\Http\Request;
+
+class PaymentReceiverController extends Controller
+{
+    public function index()
+    {
+        $receivers = PaymentReceiver::latest()->paginate(10);
+        return view('admin.payment-receivers.index', compact('receivers'));
+    }
+
+    public function create()
+    {
+        return view('admin.payment-receivers.create');
+    }
+
+    public function store(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'phone_number' => 'nullable|string|max:20',
+            'notes' => 'nullable|string',
+        ]);
+
+        PaymentReceiver::create([
+            'name' => $request->name,
+            'accepts_yape' => $request->has('accepts_yape'),
+            'accepts_plin' => $request->has('accepts_plin'),
+            'accepts_efectivo' => $request->has('accepts_efectivo'),
+            'phone_number' => $request->phone_number,
+            'notes' => $request->notes,
+        ]);
+
+        return redirect()->route('admin.payment-receivers.index')
+            ->with('success', 'Receptor de pago registrado correctamente.');
+    }
+
+    public function edit(PaymentReceiver $paymentReceiver)
+    {
+        return view('admin.payment-receivers.edit', compact('paymentReceiver'));
+    }
+
+    public function update(Request $request, PaymentReceiver $paymentReceiver)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'phone_number' => 'nullable|string|max:20',
+            'notes' => 'nullable|string',
+        ]);
+
+        $paymentReceiver->update([
+            'name' => $request->name,
+            'accepts_yape' => $request->has('accepts_yape'),
+            'accepts_plin' => $request->has('accepts_plin'),
+            'accepts_efectivo' => $request->has('accepts_efectivo'),
+            'phone_number' => $request->phone_number,
+            'notes' => $request->notes,
+        ]);
+
+        return redirect()->route('admin.payment-receivers.index')
+            ->with('success', 'Receptor de pago actualizado correctamente.');
+    }
+
+    public function destroy(PaymentReceiver $paymentReceiver)
+    {
+        $paymentReceiver->delete();
+        return redirect()->route('admin.payment-receivers.index')
+            ->with('success', 'Receptor de pago eliminado correctamente.');
+    }
+}

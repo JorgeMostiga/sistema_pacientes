@@ -13,6 +13,7 @@ class TreatmentController extends Controller
         $sheet->load(['patient', 'sessions' => function($q) {
             $q->orderBy('year', 'desc')->orderBy('month', 'desc')->orderBy('day', 'desc');
         }]);
+        
         return view('doctor.treatments.show', compact('sheet'));
     }
 

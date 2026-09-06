@@ -17,7 +17,6 @@ class AdminSeeder extends Seeder
             'name' => 'Administrador Principal',
             'usuario' => 'admin',
             'email' => 'admin@sistemapacientes.com',
-            'direccion' => 'Dirección Principal',
             'password' => Hash::make('admin123'),
             'role' => 'admin',
         ]);

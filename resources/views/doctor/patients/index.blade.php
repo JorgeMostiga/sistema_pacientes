@@ -2,7 +2,12 @@
 
 @section('content')
     <div class="d-flex justify-content-between align-items-center mb-4">
-        <h2>Pacientes</h2>
+        <div>
+            <a href="{{ route('dashboard') }}" class="btn btn-outline-secondary btn-sm mb-2">
+                <i class="bi bi-arrow-left"></i> Regresar al Panel
+            </a>
+            <h2 class="mb-0">Pacientes</h2>
+        </div>
         <a href="{{ route('doctor.patients.create') }}" class="btn btn-primary btn-lg">+ Nuevo Paciente</a>
     </div>
 

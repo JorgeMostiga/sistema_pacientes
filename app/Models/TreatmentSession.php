@@ -7,7 +7,16 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class TreatmentSession extends Model
 {
-    protected $fillable = ['treatment_sheet_id', 'treatment_name', 'year', 'month', 'day', 'attended', 'notes', 'payment_method'];
+    protected $fillable = [
+        'treatment_sheet_id', 
+        'treatment_name', 
+        'year', 
+        'month', 
+        'day', 
+        'attended', 
+        'notes', 
+        'payment_details'
+    ];
 
     public function treatmentSheet(): BelongsTo
     {

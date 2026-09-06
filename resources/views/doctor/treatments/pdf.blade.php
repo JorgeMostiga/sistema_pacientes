@@ -12,9 +12,9 @@
 <body>
     <div class="header">CLINICA SACITEB - FICHA DE TRATAMIENTO</div>
     <div class="info-box">
-        <strong>Paciente:</strong> {{ $sheet->patient->names }} {{ $sheet->patient->paternal_surname }} 
-        <strong>DNI:</strong> {{ $sheet->patient->dni }} 
-        <strong>Celular:</strong> {{ $sheet->patient->phone }}<br>
+        <strong>Paciente:</strong> {{ $sheet->patient->names }} {{ $sheet->patient->paternal_surname }} {{ $sheet->patient->maternal_surname }}<br>
+        <strong>DNI:</strong> {{ $sheet->patient->dni }} | <strong>Celular:</strong> {{ $sheet->patient->phone }} | <strong>Edad:</strong> {{ $sheet->patient->birth_date ? \Carbon\Carbon::parse($sheet->patient->birth_date)->age : 'N/A' }}<br>
+        <strong>Dirección:</strong> {{ $sheet->patient->address }}<br>
         <strong>Diagnóstico:</strong> {{ $sheet->diagnosis }}
     </div>
     <table>
@@ -31,9 +31,15 @@
         </tbody>
     </table>
     <h3>Detalle de Atenciones</h3>
-    <ul>
-        @foreach($sheet->sessions as $s)
-            <li><strong>{{ $s->day }}/{{ $s->month }}/{{ $s->year }}:</strong> {{ $s->notes }} ({{ strtoupper($s->payment_method) }})</li>
+    <ul style="list-style-type: none; padding-left: 0;">
+        @foreach($sheet->sessions->sortByDesc(fn($s) => $s->year . $s->month . $s->day) as $s)
+            <li style="margin-bottom: 10px; padding: 8px; border-bottom: 1px solid #eee;">
+                <strong>Fecha:</strong> {{ $s->day }}/{{ $s->month }}/{{ $s->year }}<br>
+                <strong>Tratamiento:</strong> {{ $s->notes }}
+                @if($s->payment_details)
+                    <br><strong style="color: #d9534f;">Detalles del Pago:</strong> {{ $s->payment_details }}
+                @endif
+            </li>
         @endforeach
     </ul>
 </body>

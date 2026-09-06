@@ -52,12 +52,22 @@ class UserController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'usuario' => ['required', 'string', 'max:255', 'unique:users,usuario,' . $user->id],
             'role' => ['required', 'in:admin,medico,licenciado,paciente'],
+            'password' => ['nullable', 'string', 'min:8'], // Agregamos validación para la contraseña
         ]);
 
-        $user->update($request->only(['name', 'usuario', 'direccion', 'role']));
+        // Preparamos los datos básicos
+        $data = $request->only(['name', 'usuario', 'role']);
 
-        return redirect()->route('admin.users.index')->with('success', 'Usuario actualizado.');
+        // Si el campo password tiene contenido, lo encriptamos y lo agregamos al array
+        if ($request->filled('password')) {
+            $data['password'] = Hash::make($request->password);
+        }
+
+        $user->update($data);
+
+        return redirect()->route('admin.users.index')->with('success', 'Usuario actualizado correctamente.');
     }
+
 
     public function destroy(User $user)
     {

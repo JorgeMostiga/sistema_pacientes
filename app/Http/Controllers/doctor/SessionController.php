@@ -14,7 +14,7 @@ class SessionController extends Controller
     {
         $request->validate([
             'notes' => 'required|string',
-            'payment_method' => 'required|in:yape,plin,efectivo,tarjeta',
+            'payment_details' => 'nullable|string',
         ]);
 
         $today = Carbon::now();
@@ -27,7 +27,7 @@ class SessionController extends Controller
             'treatment_name' => 'General',
             'attended' => true,
             'notes' => $request->notes,
-            'payment_method' => $request->payment_method,
+            'payment_details' => $request->payment_details,
         ]);
 
         return back()->with('success', 'Atención registrada correctamente.');
@@ -35,10 +35,14 @@ class SessionController extends Controller
 
     public function update(Request $request, TreatmentSession $session)
     {
-        $request->validate(['notes' => 'required|string']);
+        $request->validate([
+            'notes' => 'required|string',
+            'payment_details' => 'nullable|string'
+        ]);
         
         $session->update([
-            'notes' => $request->notes
+            'notes' => $request->notes,
+            'payment_details' => $request->payment_details
         ]);
 
         return back()->with('success', 'Atención actualizada correctamente.');

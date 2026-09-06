@@ -1,0 +1,39 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+
+class PaymentReceiver extends Model
+{
+    protected $fillable = [
+        'name',
+        'accepts_yape',
+        'accepts_plin',
+        'accepts_efectivo',
+        'phone_number',
+        'notes'
+    ];
+
+    protected $casts = [
+        'accepts_yape' => 'boolean',
+        'accepts_plin' => 'boolean',
+        'accepts_efectivo' => 'boolean',
+    ];
+
+    public function treatmentSessions(): HasMany
+    {
+        return $this->hasMany(TreatmentSession::class);
+    }
+
+    public function getAcceptedMethodsAttribute()
+    {
+        $methods = [];
+        if ($this->accepts_yape) $methods[] = 'Yape';
+        if ($this->accepts_plin) $methods[] = 'Plin';
+        if ($this->accepts_efectivo) $methods[] = 'Efectivo';
+        
+        return implode(', ', $methods) ?: 'Ninguno';
+    }
+}

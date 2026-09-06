@@ -12,8 +12,11 @@ use App\Http\Controllers\Doctor\TreatmentSheetController;
 use App\Http\Controllers\Doctor\SessionController;
 
 Route::get('/', function () {
+    if (Auth::check()) {
+        return redirect()->route('dashboard');
+    }
     return view('auth.login');
-});
+})->middleware('guest');
 
 
 Route::get('/dashboard', function () {
