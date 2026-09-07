@@ -27,7 +27,7 @@
                     </div>
                     <div class="col-12 col-md-6 mb-3">
                         <label class="form-label">DNI</label>
-                        <input type="text" name="dni" class="form-control" value="{{ $patient->dni }}" maxlength="8" pattern="\d{8}" title="Debe tener 8 dígitos" required>
+                        <input type="number" name="dni" class="form-control" value="{{ $patient->dni }}" maxlength="8" pattern="\d{8}" title="Debe tener 8 dígitos" required>
                     </div>
                 </div>
                 <div class="mb-3">

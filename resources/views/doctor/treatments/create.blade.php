@@ -3,6 +3,9 @@
 @section('content')
 <div class="row justify-content-center">
     <div class="col-md-8">
+         <a href="{{ route('doctor.patients.index') }}" class="btn btn-outline-secondary btn-sm mb-3">
+            <i class="bi bi-arrow-left"></i> Regresar a la lista
+        </a>
         <div class="card shadow-sm border-0 p-4">
             <h3 class="mb-4">Nueva Ficha: {{ $patient->names }}</h3>
             <form action="{{ route('doctor.treatments.store', $patient) }}" method="POST">
