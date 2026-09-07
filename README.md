@@ -21,7 +21,7 @@ Este es un sistema web desarrollado con **Laravel** diseñado para la gestión i
 
 1. Clonar el repositorio:
    ```bash
-   git clone <url-del-repositorio>
+   git clone https://github.com/JorgeMostiga/sistema_pacientes.git
    ```
 2. Instalar dependencias de PHP:
    ```bash
