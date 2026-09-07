@@ -41,3 +41,4 @@ Este es un sistema web desarrollado con **Laravel** diseñado para la gestión i
 - **Admin:** Gestión total de usuarios del sistema.
 - **Médico/Licenciado:** Gestión de pacientes, fichas y sesiones de tratamiento.
 - **Paciente:** Acceso a su información personal.
+
